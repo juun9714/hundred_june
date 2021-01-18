@@ -1,16 +1,23 @@
 #include <iostream>
 using namespace std;
 int main() {
-    int n;
-    int sum = 1;
-    cin >> n;
-    if (n == 0 || n==1)
-        cout << sum << endl;
-    else {
-        for (int i = n; i > 0; i--) {
-            sum *= i;
+    int t,h,w,n,mok,remain,room=0;
+    cin >> t;
+    for (int i = 0; i < t; i++) {
+        cin >> h >> w >> n;
+        mok = n / h;
+        remain = n % h;
+
+       if (remain == 0) {
+            //6Ãþ
+            room = (100*h) + mok;
+            cout << room << endl;
         }
-        cout << sum << endl;
+        else {
+            mok++;
+            room = (100 * remain) + mok;
+            cout << room << endl;
+        }
     }
     return 0;
 }
