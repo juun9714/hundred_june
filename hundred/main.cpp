@@ -1,17 +1,13 @@
 #include <iostream>
+#include <string>
 using namespace std;
-
 int main() {
-    int n;
-    cin >> n;
-    for (int i = n; i > 0; i--) {
-        for (int j = n;j>0;j--) {
-            if (j > i)
-                cout << ' ';
-            else
-                cout << '*';
-        }
-        cout << endl;
+    string str;
+    while (1) {
+        getline(cin, str);
+        if (str == "")
+            break;
+        cout << str << endl;
     }
     return 0;
 }
