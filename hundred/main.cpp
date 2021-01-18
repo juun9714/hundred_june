@@ -1,23 +1,31 @@
 #include <iostream>
 using namespace std;
 int main() {
-    int t,h,w,n,mok,remain,room=0;
-    cin >> t;
-    for (int i = 0; i < t; i++) {
-        cin >> h >> w >> n;
-        mok = n / h;
-        remain = n % h;
-
-       if (remain == 0) {
-            //6Ãþ
-            room = (100*h) + mok;
-            cout << room << endl;
+    int n,nn;
+    cin >> n;
+    for (int i = n; i > 0; i--) {
+        nn = n - i;
+        for (int ii = 0; ii < (2 * i - 1); ii++) {
+            if (nn > 0) {
+                for (; nn > 0; nn--) {
+                    cout << ' ';
+                }
+            }
+            cout << '*';
         }
-        else {
-            mok++;
-            room = (100 * remain) + mok;
-            cout << room << endl;
+        cout << endl;
+    }
+    for (int j = 2; j <= n; j++) {
+        nn = n - j;
+        for (int jj = 0; jj < (2 * j - 1); jj++) {
+            if (nn > 0) {
+                for (; nn > 0; nn--) {
+                    cout << ' ';
+                }
+            }
+            cout << '*';
         }
+        cout << endl;
     }
     return 0;
 }
