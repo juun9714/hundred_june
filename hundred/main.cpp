@@ -1,33 +1,64 @@
 #include <iostream>
+#include <cstdlib>
+#include <cstring>
 using namespace std;
-int sum(int num) {
-	int tmp(0);
-	for (int i = 0; i <= num; i++) 
-		tmp += i;
-	return tmp;
+
+long long toNum(char ch) {
+	long long res(0);
+	switch (ch) {
+	case '0':
+		res = 0;
+		break;
+	case '1':
+		res = 1;
+		break;
+	case '2':
+		res = 2;
+		break;
+	case '3':
+		res = 3;
+		break;
+	case '4':
+		res = 4;
+		break;
+	case '5':
+		res = 5;
+		break;
+	case '6':
+		res = 6;
+		break;
+	case '7':
+		res = 7;
+		break;
+	case '8':
+		res = 8;
+		break;
+	case '9':
+		res = 9;
+		break;
+	}
+	return res;
 }
 
+/*
+<주의>
+1. string 마지막 null 자리 
+2. 10000자리 * 10000자리 혹시 몰라서 longlong
+
+*/
+
 int main() {
-	int n,set,idx,tmp,i(0);
-	cin >> n;
-	tmp = n;
-
-	while (tmp > 0) {
-		i++;
-		tmp -= i;
+	char a[10001];
+	char b[10001];
+	long long sum(0);
+	cin >> a >> b;
+	//cout << strlen(a) << ' ' << strlen(b) << endl;
+	for (int i = 0; i < strlen(a); i++) {
+		for (int j = 0; j < strlen(b); j++) {
+			sum += toNum(a[i]) * toNum(b[j]);
+			//cout << "sum : "<<sum<<" = "<< toNum(a[i]) << '*' << toNum(b[j]) << endl;
+		}
 	}
-	set = i;
-	idx = n - sum(i-1);
-
-	//cout << "n, set, idx is " << n <<' '<< set <<' '<< idx << endl;
-
-	if (set % 2 == 0) {
-		//짝수 set
-		cout << idx << '/' << set - idx + 1 << endl;
-	}
-	else if (set % 2 == 1) {
-		//홀수 set
-		cout << set - idx + 1 << '/' << idx << endl;
-	}
+	cout << sum << endl;
 	return 0;
 }
