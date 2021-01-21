@@ -1,41 +1,33 @@
 #include <iostream>
-#include <cstring>
-#include <string>
 using namespace std;
-
+int sum(int num) {
+	int tmp(0);
+	for (int i = 0; i <= num; i++) 
+		tmp += i;
+	return tmp;
+}
 
 int main() {
-	int N, m, M, T, R,low, total(0),work(0);
-	cin >> N >> m >> M >> T >> R;
-	low = m;
+	int n,set,idx,tmp,i(0);
+	cin >> n;
+	tmp = n;
 
-	if (m + T > M)
-		cout << "-1" << endl;
-	else {
-		while (1) {
-			if (work >= N)
-				break;
-			else {
-				if (m + T <= M) {
-					//ÇöÀç ¸Æ¹Ú<=ÃÖ°í ¸Æ¹Ú -> ¿îµ¿
-					m += T;
-					work++;
-					total++;
-					//cout << "1ºÐ ¿îµ¿ ¿Ï·á, ÃÑ °É¸° ½Ã°£ ÇöÀç " << total << " ÇöÀç ¸Æ¹Ú " << m << endl;
-				}
-				else if (m + T > M) {
-					//ÇöÀç ¸Æ¹Ú>ÃÖ°í ¸Æ¹Ú -> ÈÞ½Ä ÇÊ¿ä
-					if (m - R > low)
-						m -= R;
-					else
-						m = low;
-					total++;
-					//cout << "1ºÐ ÈÞ½Ä ¿Ï·á, ÃÑ °É¸° ½Ã°£ ÇöÀç " << total << " ÇöÀç ¸Æ¹Ú " << m << endl;
-				}
-			}
-		}
-		//cout << "work out time : " << work << " total time : " << total << endl;
-		cout << total << endl;
+	while (tmp > 0) {
+		i++;
+		tmp -= i;
+	}
+	set = i;
+	idx = n - sum(i-1);
+
+	//cout << "n, set, idx is " << n <<' '<< set <<' '<< idx << endl;
+
+	if (set % 2 == 0) {
+		//Â¦¼ö set
+		cout << idx << '/' << set - idx + 1 << endl;
+	}
+	else if (set % 2 == 1) {
+		//È¦¼ö set
+		cout << set - idx + 1 << '/' << idx << endl;
 	}
 	return 0;
 }
