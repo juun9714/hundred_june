@@ -2,54 +2,32 @@
 #include <cstdlib>
 #include <string>
 using namespace std;
-/*
-대문자도 신경쓰기 
-*/
-int main() {
-	string str;
-	int num(0);
-	while (1) {
-		num = 0;
-		getline(cin, str);
-		if (!str.compare("#"))
-			break;
 
-		for (int i = 0; i < str.size(); i++) {
-			switch (str[i]){
-			case 'a':
-				num++;
-				break;
-			case 'e':
-				num++;
-				break;
-			case 'i':
-				num++;
-				break;
-			case'o':
-				num++;
-				break;
-			case'u':
-				num++;
-				break;
-			case 'A':
-				num++;
-				break;
-			case 'E':
-				num++;
-				break;
-			case 'I':
-				num++;
-				break;
-			case 'O':
-				num++;
-				break;
-			case 'U':
-				num++;
-				break;
-			}
+/*
+자료형 크기 생각하기
+*/
+
+int main() {
+	int i(0),num(0);
+	long long size(0),cluster(0);
+	cin >> num;
+	long* files = new long[num];
+	for (i = 0; i < num; i++)
+		cin >> files[i];
+	cin >> size;
+
+	for (i = 0; i < num; i++) {
+		if (files[i] % size > 0) {
+			//나머지 있음
+			cluster += files[i] / size;
+			cluster++;
 		}
-		cout << num << endl;
-		//cout << str << endl;
+		else if(files[i]%size==0)
+			cluster += files[i] / size;
+
+		//cout << "index is " << i << " and cluster size is : " << cluster * size << endl;
 	}
+	cout << cluster * size << endl;
+
 	return 0;
 }
