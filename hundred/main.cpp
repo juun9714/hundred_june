@@ -1,41 +1,55 @@
 #include <iostream>
 #include <cstdlib>
-#include <cstring>
+#include <string>
 using namespace std;
-struct MAX {
-	int freq;
-	int idx;
-};
+/*
+대문자도 신경쓰기 
+*/
 int main() {
-	int s1, s2, s3;
-	MAX max;
-	cin >> s1 >> s2 >> s3;
-	int arr[81] = { 0 };
+	string str;
+	int num(0);
+	while (1) {
+		num = 0;
+		getline(cin, str);
+		if (!str.compare("#"))
+			break;
 
-	for (int i = 1; i <= s1; i++) {
-		for (int j = 1; j <= s2; j++) {
-			for (int k = 1; k <= s3; k++) {
-				//cout << i<<"+"<< j <<"+"<< k <<"="<<i+j+k<< endl;
-				arr[i + j + k]++;
+		for (int i = 0; i < str.size(); i++) {
+			switch (str[i]){
+			case 'a':
+				num++;
+				break;
+			case 'e':
+				num++;
+				break;
+			case 'i':
+				num++;
+				break;
+			case'o':
+				num++;
+				break;
+			case'u':
+				num++;
+				break;
+			case 'A':
+				num++;
+				break;
+			case 'E':
+				num++;
+				break;
+			case 'I':
+				num++;
+				break;
+			case 'O':
+				num++;
+				break;
+			case 'U':
+				num++;
+				break;
 			}
 		}
+		cout << num << endl;
+		//cout << str << endl;
 	}
-	max.freq = arr[3];
-	max.idx = 3;
-	for (int i = 3; i < 81; i++) {
-		if (arr[i] > max.freq) {
-			max.freq = arr[i];
-			max.idx = i;
-		}
-		else if (arr[i] == max.freq) {
-			if (max.idx > i)
-				max.idx = i;
-		}
-	}
-
-
-	//cout << "arr[" << max.idx << "] = " << max.freq << endl;
-	cout <<max.idx<< endl;
-
 	return 0;
 }
