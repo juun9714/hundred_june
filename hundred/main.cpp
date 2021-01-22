@@ -2,63 +2,40 @@
 #include <cstdlib>
 #include <cstring>
 using namespace std;
-
-long long toNum(char ch) {
-	long long res(0);
-	switch (ch) {
-	case '0':
-		res = 0;
-		break;
-	case '1':
-		res = 1;
-		break;
-	case '2':
-		res = 2;
-		break;
-	case '3':
-		res = 3;
-		break;
-	case '4':
-		res = 4;
-		break;
-	case '5':
-		res = 5;
-		break;
-	case '6':
-		res = 6;
-		break;
-	case '7':
-		res = 7;
-		break;
-	case '8':
-		res = 8;
-		break;
-	case '9':
-		res = 9;
-		break;
-	}
-	return res;
-}
-
-/*
-<주의>
-1. string 마지막 null 자리 
-2. 10000자리 * 10000자리 혹시 몰라서 longlong
-
-*/
-
+struct MAX {
+	int freq;
+	int idx;
+};
 int main() {
-	char a[10001];
-	char b[10001];
-	long long sum(0);
-	cin >> a >> b;
-	//cout << strlen(a) << ' ' << strlen(b) << endl;
-	for (int i = 0; i < strlen(a); i++) {
-		for (int j = 0; j < strlen(b); j++) {
-			sum += toNum(a[i]) * toNum(b[j]);
-			//cout << "sum : "<<sum<<" = "<< toNum(a[i]) << '*' << toNum(b[j]) << endl;
+	int s1, s2, s3;
+	MAX max;
+	cin >> s1 >> s2 >> s3;
+	int arr[81] = { 0 };
+
+	for (int i = 1; i <= s1; i++) {
+		for (int j = 1; j <= s2; j++) {
+			for (int k = 1; k <= s3; k++) {
+				//cout << i<<"+"<< j <<"+"<< k <<"="<<i+j+k<< endl;
+				arr[i + j + k]++;
+			}
 		}
 	}
-	cout << sum << endl;
+	max.freq = arr[3];
+	max.idx = 3;
+	for (int i = 3; i < 81; i++) {
+		if (arr[i] > max.freq) {
+			max.freq = arr[i];
+			max.idx = i;
+		}
+		else if (arr[i] == max.freq) {
+			if (max.idx > i)
+				max.idx = i;
+		}
+	}
+
+
+	//cout << "arr[" << max.idx << "] = " << max.freq << endl;
+	cout <<max.idx<< endl;
+
 	return 0;
 }
