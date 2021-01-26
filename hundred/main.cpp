@@ -1,137 +1,108 @@
 #include <iostream>
 #include <cstdlib>
+#include <string>
 #include <cstring>
 using namespace std;
-/*
-행기준, 열기준으로 둘다 해야 !!!
-*/
 
+void three_Octet(char* bin, int* result, int idx);
+void two_Octet(char* bin, int* result, int idx);
 
 int main() {
-	int a(0), b(0),i(0),j(0),check_r(0),check_c(0),last(0);
-	cin >> a >> b;
-	char** castle = new char* [a];
-	int* check_bx = new int[b];
-	int* check_ax = new int[b];
-	for (i = 0; i < a; i++) {
-		castle[i] = new char[b];
-		memset(castle[i], '.', sizeof(a));
-	}
-	//2차원 배열 동적할당
+	string str;
+	int q(0), r(0), tmp(0), idx(0), j(0), i(0);
+	char bin[4];
+	getline(cin, str);
+	q = str.size() / 3;
+	r = str.size() % 3;
+	int* result = new int[q + 1];
 
-
-	for (i = 0; i < a; i++) {
-		for (j = 0; j < b; j++) {
-			cin >> castle[i][j];
+	if (q != 0) {
+		//몫이 1 이상인 경우 
+		for (i = 0; i < q; i++) {
+			tmp = str.size() - (3 * i) - 1;
+			idx = 2;
+			for (j = tmp; j > (tmp - 3); j--)
+				bin[idx--] = str[j];
+			three_Octet(bin, result, i);
 		}
 	}
-	//현재 성 관리원 상태 입력
-	
-
-	//행 기준
-	for (i = 0; i < a; i++) {
-		check_r = 0;
-		check_c = 0;
-		//check 초기화
-		for (j = 0; j < b; j++) {
-			if (castle[i][j] == 'X') {
-				check_r= 1;
-				break;
-				//해당 행에 관리원 있으니 더 볼 필요 없음(안쪽 for문 탈출) 
-			}
+	//나머지 시작
+	j = r - 1;
+	if (r != 0) {
+		//나머지가 있는 경우 
+		if (r == 1) {
+			//나머지가 1자리 
+			if (str[j] == '0')
+				result[q] = 0;
+			else if (str[j] == '1')
+				result[q] = 1;
 		}
-
-		if (check_r == 1) //i 행에 관리원 있음 -> 다음행 체크
-			continue;
-		else if (check_r == 0) { //i 행에 관리원 없음 -> i행 중 관리원 없는 열 찾아야 함
-			memset(check_bx, 0, sizeof(int) * b);
-			for (int k = 0; k < b; k++) {
-				//열 기준으로 경비원이 없는 열을 찾아라 (현재 i 행 기준)
-				for (int l = 0; l < a; l++) {
-					if (castle[l][k] == 'X'){
-						check_bx[k] = 1;
-						break;
-					}
-				}
+		else if (r == 2) {
+			//나머지가 2자리 
+			char tmp[3];
+			tmp[1] = str[j];
+			tmp[0] = str[j - 1];
+			two_Octet(tmp, result, q);
+		}
+		//나머지 있을 경우 출력
+		for (int k = q; k >= 0; k--) {
+			//상위 0 제거 
+			if (k == q && result[k] == 0) {
+				while (result[k] == 0)
+					k--;
 			}
-			int done(0);
-			for (int g = 0; g < b; g++) {
-				if (check_bx[g] == 1)
-					continue;
-				else if (check_bx[g] == 0) {
-					castle[i][g] = 'X';
-					last++;
-					done = 1;
-					break;
-				}
-			}
-			if (done == 0) {
-				castle[i][0] = 'X';
-				last++;
-				//각 열에 모두 경비원 있지만 i행에는 없을 때 -> 그냥 i행 0열에 경비원 둬버려 
-			}
-
+			//모든 상위 0 제거한 이후에도 출력할게 남아있는지 확인 
+			if (k >= 0)
+				cout << result[k];
+			else
+				cout << 0;
 		}
 	}
-
-	//열기준
-
-	for (j = 0; j < b; j++) {
-		check_c = 0;
-		//check 초기화
-		for (i = 0; i < a; i++) {
-			if (castle[i][j] == 'X') {
-				check_c = 1;
-				break;
-				//해당 열에 관리원 있으니 더 볼 필요 없음(안쪽 for문 탈출) 
+	else if (r == 0)
+	{
+		//나머지가 없는 경우 
+		for (int k = q - 1; k >= 0; k--) {
+			if (k == q - 1 && result[k] == 0) {
+				while (result[k] == 0)
+					k--;
 			}
-		}
-
-		if (check_c == 1) //j열에 관리원 있음 -> 다음열 체크
-			continue;
-		else if (check_c == 0) { //j열에 관리원 없음 -> j열 중 관리원 없는 행 찾아야 함
-			memset(check_ax, 0, sizeof(int) * a);
-			for (int l = 0; l < a; l++) {
-				//행 기준으로 경비원이 없는 행을 찾아라 (현재 j열 기준)
-				for (int k = 0; k < b; k++) {
-					if (castle[l][k] == 'X') {
-						check_ax[l] = 1;
-						break;
-					}
-				}
-			}
-			int done(0);
-			for (int g = 0; g < a; g++) {
-				if (check_ax[g] == 1)
-					continue;
-				else if (check_ax[g] == 0) {
-					castle[g][j] = 'X';
-					done = 1;
-					last++;
-					break;
-				}
-			}
-			if (done == 0) {
-				castle[0][j] = 'X';
-				last++;
-			}
-
+			if (k >= 0)
+				cout << result[k];
+			else
+				cout << 0;
 		}
 	}
-	/*
-	cout << endl;
-	for (i = 0; i < a; i++) {
-		for (j = 0; j < b; j++) {
-			cout<< castle[i][j];
-		}
-		cout << endl;
-	}
-	*/
-	cout << last << endl;
-
-
-	delete[] castle;
-	delete[] check_bx;
-	delete[] check_ax;
 	return 0;
+}
+
+void three_Octet(char* bin, int* result, int idx) {
+	//몫
+	if (!strncmp(bin, "000", 3))
+		result[idx] = 0;
+	else if (!strncmp(bin, "001", 3))
+		result[idx] = 1;
+	else if (!strncmp(bin, "010", 3))
+		result[idx] = 2;
+	else if (!strncmp(bin, "011", 3))
+		result[idx] = 3;
+	else if (!strncmp(bin, "100", 3))
+		result[idx] = 4;
+	else if (!strncmp(bin, "101", 3))
+		result[idx] = 5;
+	else if (!strncmp(bin, "110", 3))
+		result[idx] = 6;
+	else if (!strncmp(bin, "111", 3))
+		result[idx] = 7;
+}
+
+void two_Octet(char* bin, int* result, int idx) {
+	//나머지
+	if (!strncmp(bin, "00", 2))
+		result[idx] = 0;
+	else if (!strncmp(bin, "01", 2))
+		result[idx] = 1;
+	else if (!strncmp(bin, "10", 2))
+		result[idx] = 2;
+	else if (!strncmp(bin, "11", 2))
+		result[idx] = 3;
 }
