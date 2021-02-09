@@ -1,30 +1,87 @@
 #include <iostream>
-#include <cstdlib>
-#include <string>
-#include <cstring>
+#include <stack>
+#include <queue>
 using namespace std;
-/*
-단순하게 생각하기 ㅠ ㅠ ㅠ ㅠ ㅠ ㅠ
-*/
 
 int main() {
-	int n(0), start(0),inc(1),tmp(0);
-	cin >> n;
-	if (n == 1)
-		cout << 1<<endl;
-	else {
-		for (int i = 1;; i++) {
-			//i는 end값에 곱해지는 것
-			tmp = (6 * start) + 2;
-			if (n >= tmp && n < tmp + (6 * i)) {
-				cout <<i+1<< endl;
+	stack <int> s;
+	queue <int> q;
+	string str;
+	int check = 0;
+	while (1) {
+		cin >> str;
+		if (str == "0")
+			break;
+
+		for (int i = 0; i < str.size(); i++) {
+			switch (str[i]) {
+			case '0':
+				s.push(0);
+				q.push(0);
+				break;
+			case '1':
+				s.push(1);
+				q.push(1);
+				break;
+			case '2':
+				s.push(2);
+				q.push(2);
+				break;
+			case '3':
+				s.push(3);
+				q.push(3);
+				break;
+			case '4':
+				s.push(4);
+				q.push(4);
+				break;
+			case '5':
+				s.push(5);
+				q.push(5);
+				break;
+			case '6':
+				s.push(6);
+				q.push(6);
+				break;
+			case '7':
+				s.push(7);
+				q.push(7);
+				break;
+			case '8':
+				s.push(8);
+				q.push(8);
+				break;
+			case '9':
+				s.push(9);
+				q.push(9);
 				break;
 			}
+		}
+
+		int j;
+		for (j = 0; j < str.size(); j++) {
+			if (s.top() == q.front()) {
+				check = 1;
+				s.pop();
+				q.pop();
+			}
 			else {
-				start += inc;
-				inc++;
+				check = 0;
+				break;
 			}
 		}
+
+		if (check == 1)
+			cout << "yes" << endl;
+		else if (check == 0)
+			cout << "no" << endl;
+
+		//stack, queue, str 비우기
+		for (int p = 0; p < str.size() - j; p++) {
+			s.pop();
+			q.pop();
+		}
+		str.clear();
 	}
 	return 0;
 }
