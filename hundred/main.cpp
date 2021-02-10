@@ -1,7 +1,14 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
+#include <math.h>
+#include <stack>
+#include <queue>
+#include <string>
 using namespace std;
+
 /*
-한번에 맞음
+맞았는데 돌아돌아 가는 느낌.. 
+stack 안쓰고 string data type만 써서 해보기
 */
 int atoi(string str, int i) {
 	switch (str[i]) {
@@ -29,50 +36,70 @@ int atoi(string str, int i) {
 }
 
 int main() {
-	string str;
-	cin >> str;
-	int len = str.size();
-	int front = 1, back = 1, check = 0;
-	if (len == 1) {
-		//입력이 한자리 수일 때 항상 NO
-		cout << "NO";
-		return 0;
+	string x, y,result;
+	cin >> x >> y;
+	stack<int> X;
+	stack<int> Y;
+	int revX = 0, revY = 0;
+
+	for (int i = 0; i < x.size(); i++) {
+		X.push(atoi(x, i));
+		//cout << "x[" << i << "] is " << x[i] << endl;
 	}
+
+	for (int i = 0; i < y.size(); i++) {
+		Y.push(atoi(y, i));
+		//cout << "y[" << i << "] is " << y[i] << endl;
+	}
+	//cout << "X.size(): " << X.size() << endl;
+	//cout << "Y.size(): " << Y.size() << endl;
+
+	int sizeX = X.size();
+	int sizeY = Y.size();
+
+	for (int i = 0; i < sizeX; i++) {
+		if (X.top() == 0) {
+			X.pop();
+			continue;
+		}
+		else {
+			revX += X.top() * pow(10.0, X.size()-1);
+			X.pop();
+		}
+	}
+
+	for (int i = 0; i < sizeY; i++) {
+		if (Y.top() == 0) {
+			Y.pop();
+			continue;
+		}
+		else {
+			revY += Y.top() * pow(10.0, Y.size() - 1);
+			Y.pop();
+		}
+	}
+
+	//cout << "X.size(): " << X.size()<<" and revX is "<<revX<< endl;
+	//cout << "Y.size(): " << Y.size()<<" and revY is " << revY<< endl;
+	result = to_string(revX + revY);
+	//cout << result << endl;
+	for (int i = 0; i < result.size(); i++) {
+		X.push(atoi(result, i));
+		//cout << "result[" << i << "] is " <<result[i] << endl;
+	}
+	revX = 0;
+	sizeX = X.size();
+	for (int i = 0; i < sizeX; i++) {
+		if (X.top() == 0) {
+			X.pop();
+			continue;
+		}
+		else {
+			revX += X.top() * pow(10.0, X.size() - 1);
+			X.pop();
+		}
+	}
+	cout << revX;
 	
-	//입력이 한자리 수가 아닐 때 
-	for (int i = 0; i < len - 1; i++) {
-		back = 1;
-		front = 1;
-		for (int j = 0; j <= i; j++) {
-			if (i == 0) {
-				front = atoi(str, 0);
-				//cout << "front digit is only one and front is " << front << endl;
-				break;
-			}
-			front *= atoi(str, j);
-			//cout << "now i and j is " << i <<" "<<j<< " and front is " << front << endl;
-		}
-
-		for (int k = i+1; k < len; k++) {
-			if (i + 1 == len - 1) {
-				back = atoi(str, len - 1);
-				//cout << "back digit is only one and front is " << back << endl;
-				break;
-			}
-			back *= atoi(str, k);
-			//cout << "now i and k is " << i << " " << k << " and back is " << back << endl;
-		}
-
-		//cout << endl;
-
-		if (front == back) {
-			check = 1;
-			break;
-		}
-	}
-	if (check == 1)
-		cout << "YES";
-	else if (check == 0)
-		cout << "NO";
 	return 0;
 }
