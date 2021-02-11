@@ -1,14 +1,7 @@
 #include <iostream>
-#include <math.h>
-#include <stack>
-#include <queue>
-#include <string>
 using namespace std;
 
 /*
-맞았는데 돌아돌아 가는 느낌.. 
-stack 안쓰고 string data type만 써서 해보기
-*/
 int atoi(string str, int i) {
 	switch (str[i]) {
 	case '0':
@@ -33,72 +26,34 @@ int atoi(string str, int i) {
 		return 9;
 	}
 }
+*/
+
+
+/*
+https://m.blog.naver.com/PostView.nhn?blogId=occidere&logNo=220876138317&proxyReferer=https:%2F%2Fwww.google.com%2F
+참고 했음 .. 어렵다 DP문제 
+*/
 
 int main() {
-	string x, y,result;
-	cin >> x >> y;
-	stack<int> X;
-	stack<int> Y;
-	int revX = 0, revY = 0;
+	int a,n,m;
+	cin>> a;
+	int i = 0, j = 0, k = 0;
 
-	for (int i = 0; i < x.size(); i++) {
-		X.push(atoi(x, i));
-		//cout << "x[" << i << "] is " << x[i] << endl;
-	}
+	for (int aa = 0; aa < a; aa++) {
+		cin >> n >> m;
+		int bridge[30][30] = { 0 };
+		for (i = 1; i <= 30; i++)
+			bridge[1][i] = i;
+		//기초재료
 
-	for (int i = 0; i < y.size(); i++) {
-		Y.push(atoi(y, i));
-		//cout << "y[" << i << "] is " << y[i] << endl;
-	}
-	//cout << "X.size(): " << X.size() << endl;
-	//cout << "Y.size(): " << Y.size() << endl;
+		for (i = 2; i <= n; i++) {
+			for (j = i; j <= m; j++) {
+				for (k = j; k >= i; k--)
+					bridge[i][j] += bridge[i - 1][k - 1];
+			}
+		}
 
-	int sizeX = X.size();
-	int sizeY = Y.size();
-
-	for (int i = 0; i < sizeX; i++) {
-		if (X.top() == 0) {
-			X.pop();
-			continue;
-		}
-		else {
-			revX += X.top() * pow(10.0, X.size()-1);
-			X.pop();
-		}
+		cout << bridge[n][m] << endl;
 	}
-
-	for (int i = 0; i < sizeY; i++) {
-		if (Y.top() == 0) {
-			Y.pop();
-			continue;
-		}
-		else {
-			revY += Y.top() * pow(10.0, Y.size() - 1);
-			Y.pop();
-		}
-	}
-
-	//cout << "X.size(): " << X.size()<<" and revX is "<<revX<< endl;
-	//cout << "Y.size(): " << Y.size()<<" and revY is " << revY<< endl;
-	result = to_string(revX + revY);
-	//cout << result << endl;
-	for (int i = 0; i < result.size(); i++) {
-		X.push(atoi(result, i));
-		//cout << "result[" << i << "] is " <<result[i] << endl;
-	}
-	revX = 0;
-	sizeX = X.size();
-	for (int i = 0; i < sizeX; i++) {
-		if (X.top() == 0) {
-			X.pop();
-			continue;
-		}
-		else {
-			revX += X.top() * pow(10.0, X.size() - 1);
-			X.pop();
-		}
-	}
-	cout << revX;
-	
 	return 0;
 }
