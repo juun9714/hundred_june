@@ -1,0 +1,7 @@
+﻿빌드 시작...
+1>------ 빌드 시작: 프로젝트: hundred, 구성: Debug Win32 ------
+1>main.cpp
+1>C:\Users\JunheeKwon\Desktop\hundred\hundred\main.cpp(24,8): warning C4101: 'a' :참조되지 않은 지역 변수입니다.
+1>hundred.vcxproj -> C:\Users\JunheeKwon\Desktop\hundred\Debug\hundred.exe
+1>"hundred.vcxproj" 프로젝트를 빌드했습니다.
+========== 빌드: 성공 1, 실패 0, 최신 0, 생략 0 ==========
