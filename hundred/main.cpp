@@ -11,11 +11,8 @@ int main() {
 
 		for (int p = 0; p < 10; p++) {
 			for (int q = 0; q < 9; q++) {
-				if (arr[q] > arr[q + 1]){
-					tmp = arr[q];
-					arr[q] = arr[q + 1];
-					arr[q + 1] = tmp;
-				}
+				if (arr[q] > arr[q + 1])
+					swap(arr[q], arr[q + 1]);
 			}
 		}
 		cout << arr[7] << endl;
