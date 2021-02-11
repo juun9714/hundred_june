@@ -1,40 +1,27 @@
 #include <iostream>
 using namespace std;
-
-int check(int n) {
-	//num이 2부터 시작하고, n이 되기 전에 while문을 끝내게 해서 1과 자기 자신으로 나누어지지 않도록 하기 
-	int num = 2;
-	int ret = 1;
-	if (n == 1)
-		return 0;
-
-	while (num < n) {
-		if (!(n % num)) {
-			//cout << "n and num is " << n << " " << num << " and n%num is " << n % num << endl;
-			ret = 0;
-			break;
-		}
-		num++;
-	}
-	return ret;
-	//ret==1 : 소수, ret==0 : 소수 아님 
-}
-
+/*
+코딩은 꼭 밥먹고 하기..
+그래도 한번에 풀었다 !
+*/
 int main() {
-	int n,a,i;
-	int sum = 0;
-	cin >> n;
-	int* arr = new int[n];
-	for (i = 0; i < n; i++) 
-		cin >> arr[i];
+	int from, to;
+	cin >> from >> to;
+	int* arr = new int[to];
+	int value = 1;
 
-	for (i = 0; i < n; i++) {
-		if (check(arr[i])) 
-			sum++;
-		else
-			continue;
+	for (int i = 0; i < to;) {
+		for (int k = 1; k <= value; k++) {
+			arr[i] = value;
+			i++;
+		}
+		value++;
 	}
+
+	int sum = 0;
+	for (int i = from - 1; i <=to-1; i++)
+		sum += arr[i];
+
 	cout << sum;
-	
 	return 0;
 }
